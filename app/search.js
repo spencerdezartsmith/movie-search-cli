@@ -1,13 +1,20 @@
 const http = require('http')
-const searchTerm = process.argv.slice(2).join('+')
+const cheerio = require('cheerio')
 
-const getMovieData = (title) => {
-  const url = `http://www.imdb.com/find?ref_=nv_sr_fn&q=${title}&s=all`
-  console.log(url)
+const searchIMDB = (searchTerm) => {
+
 }
 
-getMovieData(searchTerm)
+const getMovieTitles = (html) => {
+
+}
+
+const run = () => {
+
+}
 
 module.exports = {
-  getMovieData
+  searchIMDB,
+  getMovieTitles,
+  run
 }
