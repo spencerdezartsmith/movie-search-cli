@@ -40,10 +40,6 @@ const getMovieTitles = (html) => {
     return movieTitles
 }
 
-const printTitles = (titles) => {
-  return titles.forEach(title => console.log(title))
-}
-
 const runSearch = () => {
   const searchTerm = process.argv.slice(2).join('+')
 
@@ -60,6 +56,5 @@ if (require.main === module) {
 module.exports = {
   searchIMDB,
   getMovieTitles,
-  printTitles,
   runSearch
 }
