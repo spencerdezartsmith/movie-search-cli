@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "VCR_MODE=playback mocha --reporter spec",
-    "test:record": "VCR_MODE=record mocha --reporter spec",
+    "test": "mocha --reporter spec",
     "start": "node app/search.js"
   },
   "repository": {
