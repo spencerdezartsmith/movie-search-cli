@@ -49,7 +49,7 @@ const runSearch = () => {
 
   searchIMDB(searchTerm, (error, movieTitles) => {
     if (error) throw error
-    printTitles(movieTitles)
+    console.log(movieTitles.join('\n'))
   })
 }
 
