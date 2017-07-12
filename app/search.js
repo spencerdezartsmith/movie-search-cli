@@ -1,7 +1,7 @@
 const http = require('http')
 const cheerio = require('cheerio')
 
-const searchIMDB = (searchTerm) => {
+const searchIMDB = (searchTerm, cb) => {
   http.get({
     host: 'www.imdb.com',
     path: `/find?ref_=nv_sr_fn&q=${searchTerm}&s=all`
@@ -22,8 +22,11 @@ const searchIMDB = (searchTerm) => {
     res.setEncoding('utf8')
     let rawHTML = ''
     res.on('data', (chunk) => { rawHTML += chunk })
-    res.on('end', () => { printTitles(getMovieTitles(rawHTML)) })
-  }).on('error', (error) => console.error(error.message))
+    res.on('end', () => {
+      const movieTitles = getMovieTitles(rawHTML)
+      cb(null, movieTitles)
+    })
+  }).on('error', error => cb(error))
 }
 
 const getMovieTitles = (html) => {
@@ -37,13 +40,16 @@ const getMovieTitles = (html) => {
     return movieTitles
 }
 
-const printTitles = (titlesArr) => {
-  titlesArr.forEach(title => console.log(title))
+const printTitles = (titles) => {
+  return titles.forEach(title => console.log(title))
 }
 
 const runSearch = () => {
   const searchTerm = process.argv.slice(2).join('+')
-  searchIMDB(searchTerm)
+  searchIMDB(searchTerm, (error, movieTitles) => {
+    if (error) throw error
+    printTitles(movieTitles)
+  })
 }
 
 runSearch()
@@ -51,5 +57,6 @@ runSearch()
 module.exports = {
   searchIMDB,
   getMovieTitles,
+  printTitles,
   runSearch
 }
