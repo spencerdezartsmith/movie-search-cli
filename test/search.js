@@ -14,21 +14,24 @@ describe('the easy way', () => {
 })
 
 describe('nock it out', () => {
-  nock('http://www.imdb.com')
-    .get('/find')
-    .reply(200, `
-      <div class='findSection'>
-        <table class="findList">
-          <tr> <td class="result_text">Rocky</td> </tr>
-          <tr> <td class="result_text">Rocky II</td> </tr>
-        </table>
-      </div>
-      <div class='findSection'>
-        <table class="findList">
-          <tr> <td class="result_text">do not return</td> </tr>
-        </table>
-      </div>
-    `)
+  beforeEach(function() {
+    nock('http://www.imdb.com')
+      .get('/find')
+      .query(true)
+      .reply(200, `
+        <div class='findSection'>
+          <table class="findList">
+            <tr> <td class="result_text">Rocky</td> </tr>
+            <tr> <td class="result_text">Rocky II</td> </tr>
+          </table>
+        </div>
+        <div class='findSection'>
+          <table class="findList">
+            <tr> <td class="result_text">do not return</td> </tr>
+          </table>
+        </div>
+      `)
+    })
 
   it('can find rocky', (done) => {
     searchIMDB('rocky', (err, result) => {
